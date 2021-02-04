@@ -1,6 +1,11 @@
+import 'react-native-gesture-handler';
+
 import React, { useEffect } from 'react';
-import { Alert, View, Text, StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Routes from './routes'
 
 const App = () => {
   useEffect(() => {
@@ -14,13 +19,11 @@ const App = () => {
   }, [])
 
   return (
-    <React.Fragment>
+    <NavigationContainer>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
-      <View>
-        <Text>Hello World!</Text>
-      </View>
-    </React.Fragment>
+      <Routes />
+    </NavigationContainer>
   );
 };
 
