@@ -3,6 +3,8 @@ import { useCallback, useState, useRef } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 
+import { api } from '../services/api'
+
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
@@ -24,25 +26,16 @@ export default function Home() {
       clearError()
 
       try {
-        const response = await fetch(`https://api.github.com/users/${name}`)
-        const data = await response.json()
+        const { data } = await api.post('/accounts', { name })
 
-        if (response.status === 200) {
-          console.log({ data })
-
-          router.push(`/${name}`)
-        } else {
-          setError(data.message)
-          console.log(response.status, data.message)
-        }
-
+        router.push(`/${data.name}`)
       } catch (error) {
         console.log({ error })
       } finally {
         setLoading(false)
       }
     }
-    
+
     createAccount()
   }, [nameInputRef, clearError, router])
 
@@ -51,6 +44,7 @@ export default function Home() {
       <Head>
         <title>Create new Account</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       </Head>
 
       <h1 className={styles.title}>

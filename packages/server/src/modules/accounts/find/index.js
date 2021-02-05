@@ -12,7 +12,7 @@ export function createFindAccountModule() {
       )
     }
 
-    return account
+    return { name: account.name, url: `${process.env.APP_URL}/share?account=${account._id}` }
   }
 
   return { execute }

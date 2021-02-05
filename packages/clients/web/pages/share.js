@@ -1,3 +1,5 @@
+import { isAndroid, isMobile } from 'react-device-detect'
+
 import Head from 'next/head'
 import ErrorPage from 'next/error'
 
@@ -5,7 +7,7 @@ import { api } from '../services/api'
 
 import styles from '../styles/Account.module.css'
 
-export default function Account({ error, account }) {
+export default function Share({ error, account }) {
   if (error) {
     return <ErrorPage title={error.message} statusCode={error.statusCode} />
   }
@@ -13,20 +15,21 @@ export default function Account({ error, account }) {
   return (
     <div className={styles.container}>
       <Head>
-        <title>{account.name}'s Page</title>
+        <title>Share {account.name}'s Page</title>
         <link rel="icon" href="/favicon.ico" />
         <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
-        <meta name="description" content={`Account page from '${account.name}'`} />
       </Head>
 
       <h1 className={styles.title}>This page is for {account.name}</h1>
 
-      <a href={account.url} className={styles.button}>Share</a>
+      <a href={''} className={styles.button}>
+        {isMobile ? `Download on ${isAndroid ? 'PlayStore' : 'AppStore'}` : 'Share'}
+      </a>
     </div>
   )
 }
 
-Account.getInitialProps = async ({ query }) => {
+Share.getInitialProps = async ({ query }) => {
   const { account } = query
 
   try {

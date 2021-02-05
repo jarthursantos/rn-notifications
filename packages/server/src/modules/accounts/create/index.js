@@ -8,8 +8,8 @@ export function createCreateAccountModule() {
       account = await AccountsModel.create({ name })
     }
 
-    return account
+    return { name: account.name, url: `${process.env.APP_URL}/share?account=${account._id}` }
   }
-  
+
   return { execute }
 }
