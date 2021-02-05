@@ -65,12 +65,7 @@ export default function Home() {
         </div>
 
         <button type="submit" disabled={isLoading}>
-          {isLoading ?
-            (
-              <LoadingIndicator />
-            ) : (
-              <span>Create</span>
-            )}
+          {isLoading ? <LoadingIndicator /> : <span>Create</span>}
         </button>
       </form>
     </div>
