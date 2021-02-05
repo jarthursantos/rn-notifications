@@ -54,11 +54,26 @@ const ShareButton = ({ url, children }) => {
 
 const CopyButton = ({ url }) => {
   const handleCopy = useCallback(() => {
+    const textArea = document.createElement('textarea')
+
+    textArea.value = url
+
+    textArea.style.top = '0'
+    textArea.style.left = '0'
+    textArea.style.position = 'fixed'
+
+    document.body.appendChild(textArea)
+
+    textArea.focus()
+    textArea.select()
+
     try {
-      navigator.clipboard.writeText(url)
-    } catch (error) {
-      console.error(error)
+      document.execCommand('copy')
+    } catch (err) {
+      console.error(err)
     }
+
+    document.body.removeChild(textArea)
   }, [url])
 
   return (
