@@ -21,8 +21,8 @@ const App = () => {
   return (
     <NavigationContainer
       linking={{
-        prefixes: ['http://www.theveganbakesale.com', 'http://theveganbakesale.com'],
-        config: { screens: { Home: '/share' } }
+        prefixes: ['http://links.foodisourfriend.com', 'https://links.foodisourfriend.com'],
+        config: { screens: { Home: '/' } }
       }}
       fallback={<Text>Loading...</Text>}
     >

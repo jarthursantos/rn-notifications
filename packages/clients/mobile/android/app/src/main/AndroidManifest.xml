@@ -26,11 +26,9 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="http"
-                  android:host="theveganbakesale.com"
-                  android:pathPrefix="/share" />
-            <data android:scheme="http"
-                  android:host="www.theveganbakesale.com"
-                  android:pathPrefix="/share" />
+                  android:host="links.foodisourfriend.com" />
+            <data android:scheme="https"
+                  android:host="links.foodisourfriend.com" />
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
