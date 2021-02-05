@@ -1,6 +1,7 @@
 import createHttpError from 'http-errors'
 
 import { AccountsModel } from '../../../models/accounts'
+import { createShareURL } from '../../../services/firebase'
 
 export function createFindAccountModule() {
   async function execute(name) {
@@ -20,7 +21,13 @@ export function createFindAccountModule() {
       )
     }
 
-    return { name: account.name, url: `${process.env.APP_URL}/share?account=${account._id}` }
+    const url = await createShareURL(`${process.env.APP_URL}/share?account=${account._id}`)
+
+    if (!url) {
+      throw createHttpError.InternalServerError('Error on dynamic link generation')
+    }
+
+    return { name: account.name, url }
   }
 
   return { execute }
