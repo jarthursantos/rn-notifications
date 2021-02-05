@@ -1,12 +1,13 @@
 import { config } from 'dotenv'
+
+config()
+
 import createDebuger from 'debug'
 import http from 'http'
 
 import { app } from './app'
 
 import { normalizeInt } from './utils/normalization'
-
-config()
 
 const debug = createDebuger('express:server')
 const port = normalizeInt(process.env.PORT || 3000)

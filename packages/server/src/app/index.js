@@ -11,13 +11,17 @@ import { accountsRoutes } from './routes/accounts'
 
 const app = express()
 
-// mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
 
 app.use(express.json())
 app.use(cors())
 app.use(logger('dev'))
 
-app.use('accounts', accountsRoutes)
+app.use('/accounts', accountsRoutes)
 
 app.use((_req, _res, next) =>
   next(createHttpError(404, 'Unavaliable resource'))
