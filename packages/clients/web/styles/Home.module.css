@@ -36,6 +36,11 @@
   transition: all 0.2s ease-in-out;
 }
 
+.form button:focus,
+.form button:active {
+  background-color: #666;
+}
+
 .form button svg {
   fill: #fff;
   height: 24px;
