@@ -4,7 +4,15 @@ import { AccountsModel } from '../../../models/accounts'
 
 export function createFindAccountModule() {
   async function execute(name) {
-    const account = await AccountsModel.findOne({ name })
+    let account = await AccountsModel.findOne({ name })
+
+    if (!account) {
+      try {
+        account = await AccountsModel.findById(name)
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
     if (!account) {
       throw new createHttpError.NotFound(

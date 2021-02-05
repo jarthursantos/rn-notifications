@@ -34,6 +34,7 @@
   transition: all 0.2s ease-in-out;
 }
 
-.button:active {
+.button:active,
+.button:hover {
   background-color: #666;
 }

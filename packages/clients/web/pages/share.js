@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { isAndroid, isMobile } from 'react-device-detect'
 
 import Head from 'next/head'
@@ -22,10 +23,48 @@ export default function Share({ error, account }) {
 
       <h1 className={styles.title}>This page is for {account.name}</h1>
 
-      <a href={''} className={styles.button}>
-        {isMobile ? `Download on ${isAndroid ? 'PlayStore' : 'AppStore'}` : 'Share'}
-      </a>
+      {isMobile ? (
+        isAndroid ? (
+            <ShareButton url="https://play.google.com/store/apps/details?id=com.instagram.android&hl=pt_BR">
+              Download on PlayStore
+            </ShareButton>
+          ) : (
+            <ShareButton url="https://apps.apple.com/br/app/instagram/id389801252">
+              Download on AppStore
+            </ShareButton>
+          )
+      ) : (
+        <CopyButton url={account.url} />
+      )}
     </div>
+  )
+}
+
+const ShareButton = ({ url, children }) => {
+  const handleOpen = useCallback(() => {
+    open(url)
+  }, [url])
+
+  return (
+    <button onClick={handleOpen} className={styles.button}>
+      {children}
+    </button>
+  )
+}
+
+const CopyButton = ({ url }) => {
+  const handleCopy = useCallback(() => {
+    try {
+      navigator.clipboard.writeText(url)
+    } catch (error) {
+      console.error(error)
+    }
+  }, [url])
+
+  return (
+    <button onClick={handleCopy} className={styles.button}>
+      Copy Share Link
+    </button>
   )
 }
 

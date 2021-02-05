@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 
 import React, { useEffect } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, StatusBar, Text } from 'react-native';
 import messaging from '@react-native-firebase/messaging';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -19,7 +19,13 @@ const App = () => {
   }, [])
 
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      linking={{
+        prefixes: ['http://www.theveganbakesale.com', 'http://theveganbakesale.com'],
+        config: { screens: { Home: '/share' } }
+      }}
+      fallback={<Text>Loading...</Text>}
+    >
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
 
       <Routes />

@@ -36,7 +36,8 @@
   transition: all 0.2s ease-in-out;
 }
 
-.form button:active {
+.form button:active,
+.form button:hover {
   background-color: #666;
 }
 
@@ -80,6 +81,12 @@
   font-size: 14px;
   padding: 0 12px;
   height: 40px;
+
+  transition: all 0.2s ease-in-out;
+}
+
+.field input:focus {
+  border-color: #999;
 }
 
 .field.error label, .field.error input {
