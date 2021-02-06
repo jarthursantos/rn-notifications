@@ -6,6 +6,7 @@ import { api } from '../service/api'
 import { extractAccount } from '../utils/extract-account'
 
 export default function Home() {
+  const [loading, setLoading] = useState(true)
   const [account, setAccount] = useState()
 
   const handleSendNotification = useCallback(() => {}, [])
@@ -15,18 +16,30 @@ export default function Home() {
       const result = await dynamic().getInitialLink()
 
       if (result) {
-        console.log(result)
+        try {
+          const { data } = await api.get(`/accounts/${extractAccount(result.url)}`)
 
-        const { data } = await api.post(`/accounts/${extractAccount(result.url)}`)
-
-        console.log(data)
-
-        setAccount(data)
+          setAccount(data)
+        } catch (error) {
+          console.log(error)
+        } finally {
+          setLoading(false)
+        }
+      } else {
+        setLoading(false)
       }
     }
 
     getInitialLink()
   }, [])
+
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.name}>Loading</Text>
+      </View>
+    )
+  }
 
   if (!account) {
     return (
