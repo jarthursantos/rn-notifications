@@ -9,7 +9,15 @@ export default function Home() {
   const [loading, setLoading] = useState(true)
   const [account, setAccount] = useState()
 
-  const handleSendNotification = useCallback(() => {}, [])
+  const handleSendNotification = useCallback(async () => {
+    if (!account) return
+
+    try {
+      await api.get(`/accounts/${account.name}/notify`)
+    } catch (error) {
+      console.log(error)
+    }
+  }, [account])
 
   useEffect(() => {
     async function getInitialLink() {

@@ -5,6 +5,15 @@ import serviceAccount from '../../serviceAccount.json'
 
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) })
 
+export async function notify() {
+  admin.messaging().sendToTopic('all', {
+    notification: {
+      title: 'Title test',
+      body: 'Body test'
+    }
+  })
+}
+
 export async function createShareURL(url) {
   try {
     const { data } = await axios.post(`${process.env.FIREBASE_ENDPOINT}?key=${process.env.API_KEY}`, {

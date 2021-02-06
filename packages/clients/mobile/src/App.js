@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(
       async message => {
-        Alert.alert('FCM Message', JSON.stringify(message))
+        console.log('FCM Message', JSON.stringify(message))
       }
     )
 
