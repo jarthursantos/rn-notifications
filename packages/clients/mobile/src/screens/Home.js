@@ -1,13 +1,34 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import { useRoute } from '@react-navigation/native'
+import dynamic from '@react-native-firebase/dynamic-links'
+
+import { api } from '../service/api'
+import { extractAccount } from '../utils/extract-account'
 
 export default function Home() {
-  const { params } = useRoute()
+  const [account, setAccount] = useState()
 
   const handleSendNotification = useCallback(() => {}, [])
 
-  if (!params || !params.account) {
+  useEffect(() => {
+    async function getInitialLink() {
+      const result = await dynamic().getInitialLink()
+
+      if (result) {
+        console.log(result)
+
+        const { data } = await api.post(`/accounts/${extractAccount(result.url)}`)
+
+        console.log(data)
+
+        setAccount(data)
+      }
+    }
+
+    getInitialLink()
+  }, [])
+
+  if (!account) {
     return (
       <View style={styles.container}>
         <Text style={styles.name}>No Account found</Text>
@@ -17,7 +38,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.name}>This page is for Arthur Santos</Text>
+      <Text style={styles.name}>This page is for {account.name}</Text>
 
       <TouchableOpacity style={styles.buttonContainer} activeOpacity={0.7} onPress={handleSendNotification}>
         <Text style={styles.buttonLabel}>Send Notification</Text>
